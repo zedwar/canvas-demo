@@ -5,5 +5,12 @@
 }
 #canvas{
     height: 100vh;
+    width: 100vw;
     border: 1px solid red;
+
+    display: block;
+}
+
+body{
+    border: 1px solid black;
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画板</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var c = document.getElementById("canvas");
+        c.clientWidth = document.documentElement.clientWidth;
+        c.clientHeight = document.documentElement.clientHeight;
+        let painting = false;
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = "#FF0000";
+        c.onmousedown = () => {
+            painting = true;
+        }
+        c.onmousemove = (e) => {
+            if (painting === true) {
+                ctx.fillRect(e.clientX - 5, e.clientY - 5, 10, 10);
+            }
+        }
+        c.onmouseup = () => {
+            painting = false;
+        }
+    </script>
+</body>
+
+</html>
