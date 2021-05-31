@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画板</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+
+        var c = document.getElementById("canvas");
+
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+
+        let painting = false;
+        let last;
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = "#FF0000";
+        ctx.lineCap = "round";
+
+        function drawLine(x1, y1, x2, y2) {
+            ctx.beginPath()
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.fill()
+        }
+
+        var isTouchDevice = 'ontouchstart' in document.documentElement;
+
+        if (isTouchDevice) {
+            c.ontouchmove = (e) => {
+                ctx.beginPath()
+                ctx.arc(e.touches[0].clientX, e.touches[0].clientY, 10, 0, 2 * Math.PI)
+                ctx.stroke();
+                ctx.fill()
+            }
+        } else {
+            c.onmousedown = (e) => {
+                painting = true;
+                last = [e.clientX, e.clientY]
+            }
+            c.onmousemove = (e) => {
+                if (painting === true) {
+                    drawLine(last[0], last[1], e.clientX, e.clientY)
+                    last = [e.clientX, e.clientY]
+                }
+            }
+            c.onmouseup = () => {
+                painting = false;
+            }
+        }
+
+    </script>
+</body>
+
+</html>
